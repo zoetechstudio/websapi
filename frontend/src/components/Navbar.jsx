@@ -45,7 +45,7 @@ const Navbar = () => {
         <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6 w-full">
 
           {/* Logo */}
-          <div className="w-full md:w-auto flex justify-start">
+          <div className="w-full md:w-auto flex justify-center md:justify-start">
             <Link to="/" className="flex-shrink-0">
               <motion.div whileHover={{ scale: 1.02 }} className="flex items-center gap-3">
                 <img

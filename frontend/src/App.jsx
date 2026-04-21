@@ -79,7 +79,7 @@ function App() {
                   <motion.img
                     src="/Logo%20Farm.png"
                     alt="o"
-                    className="w-30 h-30 md:w-36 md:h-36 object-contain drop-shadow-2xl"
+                    className="w-24 h-24 md:w-36 md:h-36 object-contain drop-shadow-2xl"
                     style={{
                       filter: 'drop-shadow(0 6px 32px rgba(184,126,81,0.75))',
                       transform: 'translateY(4px)',
