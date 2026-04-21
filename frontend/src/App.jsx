@@ -60,7 +60,7 @@ function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="flex items-center justify-center gap-0 mb-3"
+              className="flex flex-wrap items-center justify-center gap-x-2 gap-y-4 mb-6"
             >
               {/*
                 ══ BRAND NAME: "ind" + LOGO BULAT GANTI "o" + "palm" + "Sapi" ══
@@ -84,9 +84,9 @@ function App() {
                 <motion.img
                   src="/Logo%20Farm.png"
                   alt="o"
-                  className="w-28 h-28 md:w-36 md:h-36 object-contain drop-shadow-2xl"
+                  className="w-40 h-40 md:w-52 md:h-52 object-contain drop-shadow-2xl"
                   style={{
-                    filter: 'drop-shadow(0 6px 24px rgba(184,126,81,0.65))',
+                    filter: 'drop-shadow(0 6px 32px rgba(184,126,81,0.75))',
                     transform: 'translateY(4px)',
                   }}
                   animate={{ rotate: [0, 3, -3, 0] }}

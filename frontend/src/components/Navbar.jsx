@@ -45,13 +45,13 @@ const Navbar = () => {
         <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6 w-full">
 
           {/* Logo */}
-          <div className="w-full md:w-auto flex justify-center md:justify-start">
+          <div className="w-full md:w-auto flex justify-start">
             <Link to="/" className="flex-shrink-0">
               <motion.div whileHover={{ scale: 1.02 }} className="flex items-center gap-3">
                 <img
                   src="/Logo%20Farm.png"
                   alt="IPS"
-                  className="h-20 md:h-16 w-auto drop-shadow-md"
+                  className="h-12 md:h-14 w-auto drop-shadow-md"
                 />
                 <div className="flex flex-col leading-none gap-0.5">
                   <span className="text-[10px] font-black uppercase tracking-[0.35em] text-primary-400/80"
