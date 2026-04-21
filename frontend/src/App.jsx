@@ -60,63 +60,60 @@ function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="flex flex-wrap md:flex-nowrap items-center justify-center gap-x-2 gap-y-4 md:gap-0 mb-6 md:mb-3"
+              className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0 mb-6 md:mb-3"
             >
-              {/*
-                ══ BRAND NAME: "ind" + LOGO BULAT GANTI "o" + "palm" + "Sapi" ══
-                Logo circular menggantikan huruf "o" di "indo"
-              */}
-
-              {/* "ind" */}
-              <span
-                className="text-5xl md:text-7xl font-black tracking-tight leading-none"
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  color: '#e8c285',
-                  textShadow: '0 2px 20px rgba(184,126,81,0.3)',
-                }}
-              >
-                ind
-              </span>
-
-              {/* Logo menggantikan huruf "o" — BULAT, SANGAT BESAR */}
-              <span className="inline-flex items-center justify-center mx-2 md:mx-4" style={{ lineHeight: 1 }}>
-                <motion.img
-                  src="/Logo%20Farm.png"
-                  alt="o"
-                  className="w-40 h-40 md:w-36 md:h-36 object-contain drop-shadow-2xl"
+              {/* Top/Left part: "ind" + Logo */}
+              <div className="flex items-center justify-center">
+                <span
+                  className="text-5xl md:text-7xl font-black tracking-tight leading-none"
                   style={{
-                    filter: 'drop-shadow(0 6px 32px rgba(184,126,81,0.75))',
-                    transform: 'translateY(4px)',
+                    fontFamily: "'Playfair Display', serif",
+                    color: '#e8c285',
+                    textShadow: '0 2px 20px rgba(184,126,81,0.3)',
                   }}
-                  animate={{ rotate: [0, 3, -3, 0] }}
-                  transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity }}
-                />
-              </span>
+                >
+                  ind
+                </span>
 
-              {/* "palm" */}
-              <span
-                className="text-5xl md:text-7xl font-black tracking-tight leading-none"
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  color: '#e8c285',
-                  textShadow: '0 2px 20px rgba(184,126,81,0.3)',
-                }}
-              >
-                palm
-              </span>
+                <span className="inline-flex items-center justify-center mx-2 md:mx-4" style={{ lineHeight: 1 }}>
+                  <motion.img
+                    src="/Logo%20Farm.png"
+                    alt="o"
+                    className="w-30 h-30 md:w-36 md:h-36 object-contain drop-shadow-2xl"
+                    style={{
+                      filter: 'drop-shadow(0 6px 32px rgba(184,126,81,0.75))',
+                      transform: 'translateY(4px)',
+                    }}
+                    animate={{ rotate: [0, 3, -3, 0] }}
+                    transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity }}
+                  />
+                </span>
+              </div>
 
-              {/* "Sapi" — silver accent */}
-              <span
-                className="text-5xl md:text-7xl font-black tracking-tight leading-none ml-1"
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  color: '#94a3b8',
-                  textShadow: '0 2px 20px rgba(148,163,184,0.2)',
-                }}
-              >
-                Sapi
-              </span>
+              {/* Bottom/Right part: "palm" + "Sapi" */}
+              <div className="flex items-center justify-center ml-0 md:ml-1">
+                <span
+                  className="text-5xl md:text-7xl font-black tracking-tight leading-none"
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    color: '#e8c285',
+                    textShadow: '0 2px 20px rgba(184,126,81,0.3)',
+                  }}
+                >
+                  palm
+                </span>
+
+                <span
+                  className="text-5xl md:text-7xl font-black tracking-tight leading-none ml-1"
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    color: '#94a3b8',
+                    textShadow: '0 2px 20px rgba(148,163,184,0.2)',
+                  }}
+                >
+                  Sapi
+                </span>
+              </div>
             </motion.div>
 
             {/* IPS badge */}
