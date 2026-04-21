@@ -8,7 +8,7 @@ const FarmFilters = ({ activeFarm, onSelect }) => {
   useEffect(() => {
     const fetchFarms = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/farms');
+        const response = await fetch('/api/farms');
         if (!response.ok) throw new Error('Failed to fetch farms');
         const data = await response.json();
         setFarms(data);

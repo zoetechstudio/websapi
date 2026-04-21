@@ -18,7 +18,7 @@ const ProductGrid = ({ categoryId, farmName, searchQuery, limit }) => {
         if (farmName)   queryParams.append('farm', farmName);
         if (searchQuery) queryParams.append('search', searchQuery);
 
-        const response = await fetch(`http://localhost:5000/api/products?${queryParams.toString()}`);
+        const response = await fetch(`/api/products?${queryParams.toString()}`);
         if (!response.ok) throw new Error('Failed to fetch products');
         
         const data = await response.json();
