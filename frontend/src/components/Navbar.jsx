@@ -51,7 +51,7 @@ const Navbar = () => {
                 <img
                   src="/Logo%20Farm.png"
                   alt="IPS"
-                  className="h-12 md:h-14 w-auto drop-shadow-md"
+                  className="h-14 md:h-16 w-auto drop-shadow-md"
                 />
                 <div className="flex flex-col leading-none gap-0.5">
                   <span className="text-[10px] font-black uppercase tracking-[0.35em] text-primary-400/80"
