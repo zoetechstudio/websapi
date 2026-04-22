@@ -60,12 +60,12 @@ function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0 mb-6 md:mb-3"
+              className="flex flex-row items-center justify-center gap-0 mb-6 md:mb-3"
             >
-              {/* Top/Left part: "ind" + Logo */}
+              {/* "ind" + Logo */}
               <div className="flex items-center justify-center">
                 <span
-                  className="text-5xl md:text-7xl font-black tracking-tight leading-none"
+                  className="text-4xl md:text-7xl font-black tracking-tight leading-none"
                   style={{
                     fontFamily: "'Playfair Display', serif",
                     color: '#e8c285',
@@ -75,14 +75,14 @@ function App() {
                   ind
                 </span>
 
-                <span className="inline-flex items-center justify-center mx-2 md:mx-4" style={{ lineHeight: 1 }}>
+                <span className="inline-flex items-center justify-center mx-1 md:mx-4" style={{ lineHeight: 1 }}>
                   <motion.img
                     src="/Logo%20Farm.png"
                     alt="o"
-                    className="w-18 h-18 md:w-36 md:h-36 object-contain drop-shadow-2xl"
+                    className="w-12 h-12 md:w-36 md:h-36 object-contain drop-shadow-2xl"
                     style={{
                       filter: 'drop-shadow(0 6px 32px rgba(184,126,81,0.75))',
-                      transform: 'translateY(4px)',
+                      transform: 'translateY(2px)',
                     }}
                     animate={{ rotate: [0, 3, -3, 0] }}
                     transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity }}
@@ -90,10 +90,10 @@ function App() {
                 </span>
               </div>
 
-              {/* Bottom/Right part: "palm" + "Sapi" */}
-              <div className="flex items-center justify-center ml-0 md:ml-1">
+              {/* "palm" + "Sapi" */}
+              <div className="flex items-center justify-center">
                 <span
-                  className="text-5xl md:text-7xl font-black tracking-tight leading-none"
+                  className="text-4xl md:text-7xl font-black tracking-tight leading-none"
                   style={{
                     fontFamily: "'Playfair Display', serif",
                     color: '#e8c285',
@@ -104,7 +104,7 @@ function App() {
                 </span>
 
                 <span
-                  className="text-5xl md:text-7xl font-black tracking-tight leading-none ml-1"
+                  className="text-4xl md:text-7xl font-black tracking-tight leading-none ml-1"
                   style={{
                     fontFamily: "'Playfair Display', serif",
                     color: '#94a3b8',
@@ -115,6 +115,7 @@ function App() {
                 </span>
               </div>
             </motion.div>
+
 
             {/* IPS badge */}
             <motion.div
