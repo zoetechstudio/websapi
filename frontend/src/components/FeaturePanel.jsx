@@ -75,7 +75,7 @@ const FeaturePanel = () => {
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               {f.title}
             </h3>
-            <p className="text-primary-800/70 text-xs font-medium leading-relaxed relative z-10">
+            <p className="hidden md:block text-primary-800/70 text-xs font-medium leading-relaxed relative z-10">
               {f.desc}
             </p>
           </motion.div>
