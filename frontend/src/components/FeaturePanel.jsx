@@ -4,26 +4,26 @@ import { motion } from 'framer-motion';
 const features = [
   {
     icon: '🌙',
-    title: 'Lebih Ringan',
-    desc: 'Cicil tabungan qurban sesuai kemampuan, tanpa beban di momen terakhir.',
+    title: 'Sesuai Syariat',
+    desc: 'Qurban dilaksanakan sepenuhnya sesuai ketentuan syariat Islam — sah dan berkah.',
     highlight: true,
   },
   {
-    icon: '📅',
-    title: 'Lebih Terencana',
-    desc: 'Rencanakan qurban dari jauh hari. Pilih waktu dan hewan yang terbaik.',
+    icon: '🐄',
+    title: 'Hewan Sehat',
+    desc: 'Hewan qurban dipilih dari kandang terverifikasi, sehat, dan memenuhi syarat.',
     highlight: false,
   },
   {
     icon: '✨',
-    title: 'Lebih Bermanfaat',
+    title: 'Disalurkan Tepat',
     desc: 'Qurban tersalurkan tepat sasaran ke yang membutuhkan, langsung dari farm.',
     highlight: false,
   },
   {
     icon: '🛡️',
-    title: 'Terpercaya',
-    desc: 'Mitra kandang terverifikasi dan transparan — kamu tahu hewanmu ada di mana.',
+    title: 'Terpercaya Amanat',
+    desc: 'Kami amanah dalam setiap proses — transparan, jujur, dan dapat dipertanggungjawabkan.',
     highlight: false,
   },
 ];
