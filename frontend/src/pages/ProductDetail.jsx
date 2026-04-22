@@ -18,7 +18,6 @@ const ProductDetail = () => {
         if (!response.ok) throw new Error('Product not found');
         const data = await response.json();
         setProduct(data);
-        // Set active image to gallery first item OR main image
         if (data.gallery && data.gallery.length > 0) {
           setActiveImg(data.gallery[0]);
         } else {
@@ -31,7 +30,6 @@ const ProductDetail = () => {
         setLoading(false);
       }
     };
-
     fetchProduct();
   }, [id]);
 
@@ -58,19 +56,12 @@ const ProductDetail = () => {
     window.open(`https://wa.me/628123456789?text=${encodeURIComponent(text)}`, '_blank');
   };
 
-  // Ensure we have a gallery array
-  const gallery = product.gallery && product.gallery.length > 0
-    ? product.gallery
-    : [product.image_url];
+  const gallery = product.gallery && product.gallery.length > 0 ? product.gallery : [product.image_url];
 
   const handleShare = async () => {
     try {
       if (navigator.share) {
-        await navigator.share({
-          title: product.name,
-          text: `Cek ${product.name} di IndoPalm Sapi!`,
-          url: window.location.href,
-        });
+        await navigator.share({ title: product.name, text: `Cek ${product.name} di IndoPalm Sapi!`, url: window.location.href });
       } else {
         await navigator.clipboard.writeText(window.location.href);
         alert('Link berhasil disalin ke clipboard!');
@@ -79,6 +70,56 @@ const ProductDetail = () => {
       console.error('Error sharing:', err);
     }
   };
+
+  /* ── Shared: main stylized panel content ── */
+  const PanelContent = () => (
+    <>
+      {/* Header section (Yellow) */}
+      <div className="absolute top-0 left-0 right-0 h-28 bg-[#c49a4d] flex flex-col items-center justify-center pt-2">
+        <span className="text-[10px] font-black tracking-[0.3em] uppercase text-primary-900/60 mb-1">
+          {product.jenis || 'Sapi Qurban'}
+        </span>
+        <h3 className="text-3xl md:text-4xl font-black text-primary-950 leading-none">
+          {product.kode_unik}
+        </h3>
+        <div className="absolute top-[-20px] right-[-20px] w-24 h-24 bg-white/10 rounded-full blur-2xl" />
+      </div>
+
+      {/* Main Image Container */}
+      <div className="relative z-10 mt-20 mb-6 bg-white rounded-[2rem] shadow-inner overflow-hidden aspect-square flex items-center justify-center border-[6px] border-white/50">
+        {activeImg ? (
+          <img src={activeImg} alt={product.name} className="w-full h-full object-cover" />
+        ) : (
+          <span className="text-[8rem] opacity-10">🐂</span>
+        )}
+        <div className="absolute top-4 right-4">
+          <button
+            onClick={handleShare}
+            className="w-9 h-9 bg-white/80 backdrop-blur-sm rounded-full shadow-md flex items-center justify-center text-primary-600 hover:text-primary-800 transition-colors"
+          >
+            <Share2 className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Bottom Footer Area */}
+      <div className="mt-auto flex flex-col items-center pb-2">
+        <div className="flex w-full gap-2 mb-4 px-2">
+          {[
+            { label: 'Bobot', value: `${product.bobot}Kg`, icon: '⚖️' },
+            { label: 'Kategori', value: product.category_name, icon: '🏷️' },
+            { label: 'Kandang', value: product.farm_name, icon: '🏠' },
+          ].map(stat => (
+            <div key={stat.label} className="flex-1 bg-white/10 backdrop-blur-md border border-white/10 rounded-xl px-2 py-3 flex flex-col items-center justify-center gap-1">
+              <span className="text-base">{stat.icon}</span>
+              <span className="text-[7px] font-black uppercase text-white/40 tracking-widest">{stat.label}</span>
+              <span className="text-[10px] font-black text-[#c49a4d] text-center line-clamp-1">{stat.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <div className="min-h-screen bg-primary-50 pb-20">
@@ -90,19 +131,17 @@ const ProductDetail = () => {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             onClick={() => navigate(-1)}
-            className="flex items-center gap-1.5 text-silver-400 font-bold text-xs tracking-widest uppercase
-                       hover:text-primary-600 transition-colors"
+            className="flex items-center gap-1.5 text-silver-400 font-bold text-xs tracking-widest uppercase hover:text-primary-600 transition-colors"
           >
             <ChevronLeft className="h-4 w-4" />
             Kembali ke Katalog
           </motion.button>
 
-          {/* Brand tag - Moved here */}
           <motion.span
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
-            className="inline-flex items-center gap-2 bg-primary-100 text-primary-600 px-4 py-1.5 rounded-full
-                             text-[10px] font-black tracking-widest uppercase">
+            className="inline-flex items-center gap-2 bg-primary-100 text-primary-600 px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase"
+          >
             <img src="/Logo%20Farm.png" alt="IPS" className="h-4 w-4 object-contain" />
             IndoPalm Sapi (IPS)
           </motion.span>
@@ -110,83 +149,51 @@ const ProductDetail = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 items-start">
 
-          {/* ── Left Column: Merged Gallery + Photo ── */}
+          {/* ── Left Column ── */}
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex items-start"
+            className="flex flex-col items-center"
           >
-            {/* Gallery Panel (Docked) */}
-            <div className="hidden lg:flex flex-col gap-3 bg-primary-900 border-y-4 border-l-4 border-primary-800 rounded-l-[3rem] p-3 py-6 shadow-2xl relative z-0 mt-12 -mr-1">
-              <span className="text-[7px] font-black uppercase text-white/30 tracking-[0.3em] text-center mb-2">Galeri</span>
+            {/* ── DESKTOP: docked gallery sidebar + panel ── */}
+            <div className="hidden lg:flex w-full items-start">
+              {/* Sidebar gallery */}
+              <div className="flex flex-col gap-3 bg-primary-900 border-y-4 border-l-4 border-primary-800 rounded-l-[3rem] p-3 py-6 shadow-2xl relative z-0 mt-12 -mr-1">
+                <span className="text-[7px] font-black uppercase text-white/30 tracking-[0.3em] text-center mb-2">Galeri</span>
+                {gallery.map((img, i) => (
+                  <motion.div
+                    key={i}
+                    whileHover={{ scale: 1.1, x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setActiveImg(img)}
+                    className={`w-14 h-14 rounded-xl border-2 overflow-hidden cursor-pointer transition-all
+                      ${activeImg === img ? 'border-primary-400 ring-4 ring-primary-100/20 shadow-lg' : 'border-primary-800 hover:border-primary-600'}`}
+                  >
+                    <img src={img} alt={`${product.name} thumb ${i}`} className="w-full h-full object-cover" />
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Main panel */}
+              <div className="flex-1 relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-primary-800 bg-primary-900 flex flex-col p-4 md:p-6 min-h-[550px] z-10">
+                <PanelContent />
+              </div>
+            </div>
+
+            {/* ── MOBILE: full-width panel ── */}
+            <div className="lg:hidden w-full relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-primary-800 bg-primary-900 flex flex-col p-4 min-h-[480px] z-10">
+              <PanelContent />
+            </div>
+
+            {/* ── MOBILE: small centered gallery below panel ── */}
+            <div className="lg:hidden flex justify-center gap-2 mt-4 flex-wrap">
               {gallery.map((img, i) => (
-                <motion.div
+                <div
                   key={i}
-                  whileHover={{ scale: 1.1, x: 5 }}
-                  whileTap={{ scale: 0.95 }}
                   onClick={() => setActiveImg(img)}
                   className={`w-14 h-14 rounded-xl border-2 overflow-hidden cursor-pointer transition-all
-                    ${activeImg === img ? 'border-primary-400 ring-4 ring-primary-100/20 shadow-lg' : 'border-primary-800 hover:border-primary-600'}`}
+                    ${activeImg === img ? 'border-primary-500 ring-2 ring-primary-300' : 'border-primary-200'}`}
                 >
-                  <img src={img} alt={`${product.name} thumb ${i}`} className="w-full h-full object-cover" />
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Main Stylized Panel */}
-            <div className="flex-1 relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-primary-800 bg-primary-900 flex flex-col p-4 md:p-6 min-h-[550px] z-10">
-              
-              {/* Header section (Yellow) */}
-              <div className="absolute top-0 left-0 right-0 h-28 bg-[#c49a4d] flex flex-col items-center justify-center pt-2">
-                <span className="text-[10px] font-black tracking-[0.3em] uppercase text-primary-900/60 mb-1">
-                  {product.jenis || 'Sapi Qurban'}
-                </span>
-                <h3 className="text-3xl md:text-4xl font-black text-primary-950 leading-none">
-                  {product.kode_unik}
-                </h3>
-                <div className="absolute top-[-20px] right-[-20px] w-24 h-24 bg-white/10 rounded-full blur-2xl" />
-              </div>
-
-              {/* Main Image Container */}
-              <div className="relative z-10 mt-20 mb-6 bg-white rounded-[2rem] shadow-inner overflow-hidden aspect-square flex items-center justify-center border-[6px] border-white/50">
-                {activeImg ? (
-                  <img src={activeImg} alt={product.name} className="w-full h-full object-cover" />
-                ) : (
-                  <span className="text-[8rem] opacity-10">🐂</span>
-                )}
-                
-                <div className="absolute top-4 right-4">
-                  <button 
-                    onClick={handleShare}
-                    className="w-9 h-9 bg-white/80 backdrop-blur-sm rounded-full shadow-md flex items-center justify-center
-                                     text-primary-600 hover:text-primary-800 transition-colors">
-                    <Share2 className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Bottom Footer Area */}
-              <div className="mt-auto flex flex-col items-center pb-2">
-                <div className="flex w-full gap-2 mb-4 px-2">
-                  {[
-                    { label: 'Bobot', value: `${product.bobot}Kg`, icon: '⚖️' },
-                    { label: 'Kategori', value: product.category_name, icon: '🏷️' },
-                    { label: 'Kandang', value: product.farm_name, icon: '🏠' },
-                  ].map(stat => (
-                    <div key={stat.label} className="flex-1 bg-white/10 backdrop-blur-md border border-white/10 rounded-xl px-2 py-3 flex flex-col items-center justify-center gap-1">
-                      <span className="text-base">{stat.icon}</span>
-                      <span className="text-[7px] font-black uppercase text-white/40 tracking-widest">{stat.label}</span>
-                      <span className="text-[10px] font-black text-[#c49a4d] text-center line-clamp-1">{stat.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Mobile Horizontal Gallery */}
-            <div className="lg:hidden flex overflow-x-auto gap-3 py-4 no-scrollbar mt-4">
-              {gallery.map((img, i) => (
-                <div key={i} onClick={() => setActiveImg(img)} className={`flex-shrink-0 w-20 h-20 rounded-xl border-2 overflow-hidden ${activeImg === img ? 'border-primary-400' : 'border-white'}`}>
                   <img src={img} alt={`mob ${i}`} className="w-full h-full object-cover" />
                 </div>
               ))}
@@ -255,13 +262,8 @@ const ProductDetail = () => {
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleWA}
-                className="w-full py-4 rounded-2xl font-black text-sm
-                           flex items-center justify-center gap-3 shadow-lg shadow-primary-200/60
-                           transition-all"
-                style={{
-                  background: 'linear-gradient(135deg, #8c6239 0%, #b97e51 100%)',
-                  color: 'white',
-                }}
+                className="w-full py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-3 shadow-lg shadow-primary-200/60 transition-all"
+                style={{ background: 'linear-gradient(135deg, #8c6239 0%, #b97e51 100%)', color: 'white' }}
               >
                 <MessageCircle className="h-5 w-5" />
                 TANYA VIA WHATSAPP
