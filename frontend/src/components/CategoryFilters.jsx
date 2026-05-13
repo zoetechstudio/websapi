@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../config';
 
 const CategoryFilters = ({ activeCategory, onSelect }) => {
   const [categories, setCategories] = useState([]);
@@ -8,7 +9,7 @@ const CategoryFilters = ({ activeCategory, onSelect }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('/api/categories');
+        const response = await fetch(`${API_BASE_URL}/categories`);
         if (!response.ok) throw new Error('Failed to fetch categories');
         const data = await response.json();
         

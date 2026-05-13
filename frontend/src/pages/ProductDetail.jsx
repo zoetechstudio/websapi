@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, MessageCircle, Share2, Heart, MapPin, Scale, CalendarDays, Tag, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../config';
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`/api/products/${id}`);
+        const response = await fetch(`${API_BASE_URL}/products/${id}`);
         if (!response.ok) throw new Error('Product not found');
         const data = await response.json();
         setProduct(data);
@@ -88,7 +89,7 @@ const ProductDetail = () => {
       {/* Main Image Container */}
       <div className="relative z-10 mt-20 mb-6 bg-white rounded-[2rem] shadow-inner overflow-hidden aspect-square flex items-center justify-center border-[6px] border-white/50">
         {activeImg ? (
-          <img src={activeImg} alt={product.name} className="w-full h-full object-cover" />
+          <img src={activeImg} alt={product.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
         ) : (
           <span className="text-[8rem] opacity-10">🐂</span>
         )}
@@ -169,7 +170,7 @@ const ProductDetail = () => {
                     className={`w-14 h-14 rounded-xl border-2 overflow-hidden cursor-pointer transition-all
                       ${activeImg === img ? 'border-primary-400 ring-4 ring-primary-100/20 shadow-lg' : 'border-primary-800 hover:border-primary-600'}`}
                   >
-                    <img src={img} alt={`${product.name} thumb ${i}`} className="w-full h-full object-cover" />
+                    <img src={img} alt={`${product.name} thumb ${i}`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                   </motion.div>
                 ))}
               </div>
@@ -194,7 +195,7 @@ const ProductDetail = () => {
                   className={`w-14 h-14 rounded-xl border-2 overflow-hidden cursor-pointer transition-all
                     ${activeImg === img ? 'border-primary-500 ring-2 ring-primary-300' : 'border-primary-200'}`}
                 >
-                  <img src={img} alt={`mob ${i}`} className="w-full h-full object-cover" />
+                  <img src={img} alt={`mob ${i}`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 </div>
               ))}
             </div>

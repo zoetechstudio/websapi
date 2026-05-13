@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../config';
 
 const FarmFilters = ({ activeFarm, onSelect }) => {
   const [farms, setFarms] = useState([]);
@@ -8,7 +9,7 @@ const FarmFilters = ({ activeFarm, onSelect }) => {
   useEffect(() => {
     const fetchFarms = async () => {
       try {
-        const response = await fetch('/api/farms');
+        const response = await fetch(`${API_BASE_URL}/farms`);
         if (!response.ok) throw new Error('Failed to fetch farms');
         const data = await response.json();
         setFarms(data);
@@ -66,9 +67,13 @@ const FarmFilters = ({ activeFarm, onSelect }) => {
                   : 'bg-[#fefce8] border-yellow-100 text-primary-400 hover:bg-yellow-50 hover:border-yellow-200 hover:text-primary-600'
               }`}
             >
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden
                               ${isActive ? 'bg-white/20' : 'bg-white shadow-sm'}`}>
-                🏠
+                {f.image_url ? (
+                  <img src={f.image_url} alt={f.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                ) : (
+                  <span className="text-xl">🏠</span>
+                )}
               </div>
               <span className="uppercase tracking-widest font-black text-[9px] md:text-[10px] flex-1">
                 {f.name}

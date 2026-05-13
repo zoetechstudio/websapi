@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../config';
 
 
 
@@ -20,7 +21,7 @@ const FarmList = ({ activeFarm, onSelectFarm }) => {
   React.useEffect(() => {
     const fetchFarms = async () => {
       try {
-        const response = await fetch('/api/farms');
+        const response = await fetch(`${API_BASE_URL}/farms`);
         if (!response.ok) throw new Error('Failed to fetch farms');
         const data = await response.json();
         
@@ -105,6 +106,7 @@ const FarmList = ({ activeFarm, onSelectFarm }) => {
                   src={farm.image}
                   alt={farm.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary-950/85 via-primary-900/30 to-transparent" />
 
@@ -141,24 +143,18 @@ const FarmList = ({ activeFarm, onSelectFarm }) => {
                   {farm.description}
                 </p>
 
-                {/* Stats row */}
-                <div className="grid grid-cols-3 gap-2 mb-4">
-                  {[
-                    { label: 'Ternak', value: farm.stats.sapi },
-                    { label: 'Luas', value: farm.stats.luas },
-                    { label: 'Sejak', value: farm.stats.tahun },
-                  ].map(s => (
-                    <div key={s.label} className="bg-primary-50 rounded-xl px-2 py-2.5 text-center">
-                      <p className="text-base font-black text-primary-700" style={{ fontFamily: "'Playfair Display', serif" }}>{s.value}</p>
-                      <p className="text-[9px] font-bold uppercase tracking-wider text-primary-400">{s.label}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Location */}
-                <div className="flex items-center gap-2 text-xs font-bold text-primary-600 bg-primary-50 px-3 py-2 rounded-xl">
-                  <span>📍</span>
-                  <span>{farm.location}</span>
+                {/* Stats row: Location and Since */}
+                <div className="grid grid-cols-[1.5fr_1fr] gap-2 mb-4">
+                  <div className="bg-primary-50 rounded-2xl px-4 py-3 flex flex-col justify-center border border-primary-100/50">
+                    <p className="text-[8px] font-black uppercase tracking-[0.2em] text-primary-400 mb-0.5">Lokasi Mitra</p>
+                    <p className="text-[11px] font-black text-primary-800 flex items-center gap-1.5 truncate">
+                      <span className="text-xs">📍</span> {farm.location}
+                    </p>
+                  </div>
+                  <div className="bg-primary-50 rounded-2xl px-3 py-3 text-center border border-primary-100/50 flex flex-col justify-center">
+                    <p className="text-sm font-black text-primary-700" style={{ fontFamily: "'Playfair Display', serif" }}>{farm.stats.tahun}</p>
+                    <p className="text-[8px] font-black uppercase tracking-[0.2em] text-primary-400">Berdiri Sejak</p>
+                  </div>
                 </div>
               </div>
             </motion.div>

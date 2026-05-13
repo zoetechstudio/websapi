@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Loader2 } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 const ProductGrid = ({ categoryId, farmName, searchQuery, limit }) => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const ProductGrid = ({ categoryId, farmName, searchQuery, limit }) => {
         if (farmName)   queryParams.append('farm', farmName);
         if (searchQuery) queryParams.append('search', searchQuery);
 
-        const response = await fetch(`/api/products?${queryParams.toString()}`);
+        const response = await fetch(`${API_BASE_URL}/products?${queryParams.toString()}`);
         if (!response.ok) throw new Error('Failed to fetch products');
         
         const data = await response.json();
@@ -104,7 +105,7 @@ const ProductGrid = ({ categoryId, farmName, searchQuery, limit }) => {
               style={{ background: 'linear-gradient(135deg, #f9f4ef 0%, #e2e8f0 100%)' }}>
               
               {p.image_url ? (
-                <img src={p.image_url} alt={p.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <img src={p.image_url} alt={p.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="text-[7rem] opacity-[0.07] select-none">🐂</span>
