@@ -2,19 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { Search, X, ChevronDown, SlidersHorizontal } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 
 const categories = ['Ekonomis', 'Medium', 'Premium', 'Kambing', 'Sapi Bali'];
 const farms      = ['Semua Kandang', 'Purnama Farm', 'Nusantara Livestock', 'Berkah Tani Farm'];
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [isScrolled,       setIsScrolled]       = useState(false);
+  const [logoUrl,          setLogoUrl]           = useState('/Logo%20Farm.png');
+  const [isScrolled,       setIsScrolled]        = useState(false);
   const [filterOpen,       setFilterOpen]        = useState(false);
   const [searchQuery,      setSearchQuery]       = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Semua Kategori');
+  const [selectedCategory, setSelectedCategory]  = useState('Semua Kategori');
   const [selectedFarm,     setSelectedFarm]      = useState('Semua Kandang');
   const [categoryOpen,     setCategoryOpen]      = useState(false);
   const [farmOpen,         setFarmOpen]          = useState(false);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/settings`)
+      .then(r => r.json())
+      .then(data => { if (data.logo_url) setLogoUrl(data.logo_url); })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const fn = () => setIsScrolled(window.scrollY > 20);
@@ -49,9 +58,10 @@ const Navbar = () => {
             <Link to="/" className="flex-shrink-0">
               <motion.div whileHover={{ scale: 1.02 }} className="flex items-center gap-3">
                 <img
-                  src="/Logo%20Farm.png"
+                  src={logoUrl}
                   alt="IPS"
                   className="h-14 md:h-16 w-auto drop-shadow-md"
+                  referrerPolicy="no-referrer"
                 />
                 <div className="flex flex-col leading-none gap-0.5">
                   <span className="text-[10px] font-black uppercase tracking-[0.35em] text-primary-400/80"
