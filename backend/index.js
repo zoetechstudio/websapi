@@ -107,6 +107,20 @@ app.get('/', (req, res) => {
   res.send('Indopalm Sapi API is running (Connected to Database)...');
 });
 
+// 5. Get Site Settings (public)
+app.get('/api/settings', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT key, value FROM site_settings');
+    // Convert rows to key-value object
+    const settings = {};
+    result.rows.forEach(row => { settings[row.key] = row.value; });
+    res.json(settings);
+  } catch (err) {
+    console.error('Error fetching settings:', err);
+    res.status(500).json({ error: 'Database error' });
+  }
+});
+
 // ==========================================
 // ADMIN API ENDPOINTS (AUTHENTICATION)
 // ==========================================
@@ -149,6 +163,24 @@ const authenticateToken = (req, res, next) => {
 
 // ==========================================
 // PROTECTED CRUD ENDPOINTS
+
+// PUT Site Settings (admin only)
+app.put('/api/settings', authenticateToken, async (req, res) => {
+  const settings = req.body; // { key: value, key2: value2, ... }
+  try {
+    for (const [key, value] of Object.entries(settings)) {
+      await pool.query(
+        `INSERT INTO site_settings (key, value) VALUES ($1, $2)
+         ON CONFLICT (key) DO UPDATE SET value = $2`,
+        [key, value]
+      );
+    }
+    res.json({ message: 'Settings updated successfully' });
+  } catch (err) {
+    console.error('Error updating settings:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
 // ==========================================
 
 // --- CATEGORIES ---

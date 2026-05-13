@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, Tent, Tags, LogOut } from 'lucide-react';
+import { LayoutDashboard, Package, Tent, Tags, Settings, LogOut } from 'lucide-react';
 
 const AdminLayout = () => {
   const token = localStorage.getItem('adminToken');
@@ -22,6 +22,7 @@ const AdminLayout = () => {
     { name: 'Produk (Sapi)', path: '/admin/products', icon: Package },
     { name: 'Kandang (Farms)', path: '/admin/farms', icon: Tent },
     { name: 'Kategori', path: '/admin/categories', icon: Tags },
+    { name: 'Pengaturan Website', path: '/admin/settings', icon: Settings },
   ];
 
   return (

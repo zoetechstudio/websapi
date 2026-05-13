@@ -103,3 +103,23 @@ INSERT INTO products (kode_unik, name, jenis, bobot, harga, image_url, gallery, 
   ('NQ008', 'Sapi Brangus NQ008 2026 Bobot 950Kg', 'Sapi Brangus', 950, 0, 'https://images.unsplash.com/photo-1546445317-29f4545e9d53?auto=format&fit=crop&w=800&q=80', '["https://images.unsplash.com/photo-1546445317-29f4545e9d53?auto=format&fit=crop&w=800&q=80"]'::jsonb, 1, 1),
   ('NQ084', 'Sapi Pegon Cross Brangus NQ084 2026 Bobot 1000Kg', 'Sapi Pegon', 1000, 0, 'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=800&q=80', '["https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=800&q=80"]'::jsonb, 2, 1),
   ('NQ011', 'Sapi Simental NQ011 2026 Bobot 950Kg', 'Sapi Simental', 950, 0, 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=800&q=80', '["https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=800&q=80"]'::jsonb, 3, 1);
+
+-- 9. CREATE SITE SETTINGS TABLE
+CREATE TABLE IF NOT EXISTS site_settings (
+  key   text PRIMARY KEY,
+  value text
+);
+
+-- Insert default site settings
+INSERT INTO site_settings (key, value) VALUES
+  ('logo_url',       ''),
+  ('banner_url',     ''),
+  ('hero_title',     'Qurban Sapi Itu Bukan Soal Mampu, Tapi Soal Niat.'),
+  ('hero_subtitle',  'Yuk, Mulai Dulu Aja.'),
+  ('whatsapp_number','6281234567890'),
+  ('site_name',      'IndoPalm Sapi')
+ON CONFLICT (key) DO NOTHING;
+
+-- RLS for site_settings
+ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public read settings" ON site_settings FOR SELECT USING (true);

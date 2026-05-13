@@ -13,6 +13,7 @@ import Dashboard from './pages/admin/Dashboard';
 import ProductManager from './pages/admin/ProductManager';
 import FarmManager from './pages/admin/FarmManager';
 import CategoryManager from './pages/admin/CategoryManager';
+import SiteSettings from './pages/admin/SiteSettings';
 
 function App() {
   const { scrollYProgress } = useScroll();
@@ -47,6 +48,7 @@ function App() {
               <Route path="products"           element={<ProductManager />} />
               <Route path="farms"              element={<FarmManager />} />
               <Route path="categories"         element={<CategoryManager />} />
+              <Route path="settings"            element={<SiteSettings />} />
             </Route>
           </Routes>
         </main>
